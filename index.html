@@ -3,196 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Question and Answer Box</title>
-    
-    <!-- Link to Google Font (Baloo 2) -->
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
-    
+    <title>Background Image with Random Image Generator</title>
     <style>
-        /* Style for the body to set background and margin */
         body {
             margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #0CC0DF, #00A3E0); /* Gradient background */
             height: 100vh;
+            background-image: url('https://i.imgur.com/3ROC7jH.png');
+            background-size: cover; /* Ensure the image covers the entire background */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Prevent image repetition */
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
         }
-
-        /* Title styling */
-        .title {
-            font-family: 'Baloo 2', cursive;
-            font-size: 36px; /* Increased size for better visibility */
-            color: #FFFFFF; /* White text */
-            font-weight: bold;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); /* More pronounced shadow */
-            margin-bottom: 30px; /* More space between title and box */
+        #image-container {
+            width: 300px;
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
-
-        /* Box styling */
-        .qa-box {
-            background-color: #FED600;
-            border: 3px solid #000000; /* Slightly thicker border */
-            border-radius: 20px; /* Increased border-radius for more rounded corners */
-            padding: 20px;
-            width: 40%; /* Set the box to 40% of the screen width */
-            box-sizing: border-box;
-            text-align: center;
-            font-family: 'Baloo 2', cursive;
-            color: #000000;
-            font-size: 22px; /* Slightly larger font size */
-            font-weight: bold;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for 3D effect */
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition effects */
-        }
-
-        /* Hover effect */
-        .qa-box:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5); /* Enhanced shadow on hover */
-        }
-
-        /* Question styling */
-        .question {
-            color: #000000;
-        }
-
-        /* Answer styling */
-        .answer {
-            color: #4A4A4A;
-        }
-
-        /* Pulse animation for box */
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        .pulsing {
-            animation: pulse 0.8s ease-in-out;
+        #image-container.pulse {
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
-    <!-- Title with balloon font -->
-    <div class="title">HORROR</div>
-
-    <div class="qa-box" id="qaBox" onclick="changeQuestion()">
-        <div id="question" class="question">Loading...</div>
-        <div id="answer" class="answer">Please wait...</div>
-    </div>
+    <div id="image-container"></div>
 
     <script>
-        // Array of questions and answers
-        const qaPairs = [
-            { q: "Who plays the lead role in The Witch (2015)?", a: "Anya Taylor-Joy" },
-            { q: "Who directed The Orphanage (2007), a Spanish film about a haunted orphanage?", a: "J.A. Bayona" },
-            { q: "In The Silence of the Lambs (1991), who helps Clarice Starling with her investigation?", a: "Hannibal Lecter" },
-            { q: "What supernatural entity is featured in the 2016 Brazilian film The Devil's Candy?", a: "A demonic presence influencing the family" },
-            { q: "What is the name of the possessed doll in The Conjuring universe?", a: "Annabelle" },
-            { q: "What year was The Exorcist released?", a: "1973" },
-            { q: "What is the name of the storybook creature in The Babadook (2014)?", a: "Mister Babadook" },
-            { q: "What year was Bird Box released?", a: "2018" },
-            { q: "What year was The Autopsy of Jane Doe released?", a: "2016" },
-            { q: "What is the primary antagonist in The Thing (1982)?", a: "A shape-shifting alien" },
-            { q: "Who directed Psycho (1960)?", a: "Alfred Hitchcock" },
-            { q: "What is the premise of Happy Death Day (2017)?", a: "A college student relives the same day repeatedly until she solves her own murder" },
-            { q: "What is the name of the haunted videotape in The Ring (2002)?", a: "The “Ring” tape" },
-            { q: "Who directed The Texas Chainsaw Massacre (1974)?", a: "Tobe Hooper" },
-            { q: "What year did Psycho release?", a: "1960" },
-            { q: "Who directed the 1979 film Alien?", a: "Ridley Scott" },
-            { q: "In Scream (1996), what is the killer’s nickname?", a: "Ghostface" },
-            { q: "Who plays the scientist that transforms into a fly in The Fly (1986)?", a: "Jeff Goldblum" },
-            { q: "What 1980 film takes place at the Overlook Hotel?", a: "The Shining" },
-            { q: "Who directed The Cabin in the Woods (2012)?", a: "Drew Goddard" },
-            { q: "What is the name of the antagonist in Child's Play (1988)?", a: "Chucky" },
-            { q: "Who directed The Shining (1980)?", a: "Stanley Kubrick" },
-            { q: "In Hereditary (2018), who plays the character of Annie?", a: "Toni Collette" },
-            { q: "Who is the final girl in The Texas Chainsaw Massacre (1974)?", a: "Sally Hardesty" },
-            { q: "What is the premise of Train to Busan (2016)?", a: "A zombie outbreak occurs on a train in South Korea" },
-            { q: "What is the name of the town terrorized by a killer shark in Jaws (1975)?", a: "Amity Island" },
-            { q: "Who is the director of The Conjuring (2013)?", a: "James Wan" },
-            { q: "What year was It Follows released?", a: "2014" },
-            { q: "What is the premise of A Nightmare on Elm Street (1984)?", a: "A killer haunts teenagers in their dreams" },
-            { q: "In The Sixth Sense (1999), what famous line is spoken by Cole Sear?", a: "I see dead people" },
-            { q: "What year was The Blair Witch Project released?", a: "1999" },
-            { q: "What is the primary plot of The Ring (2002)?", a: "A cursed videotape kills its viewers within seven days" },
-            { q: "Who directed It (2017)?", a: "Andy Muschietti" },
-            { q: "What is the central theme of A Quiet Place (2018)?", a: "Survival in a world where making noise attracts deadly creatures" },
-            { q: "What year did The Thing (1982) release?", a: "1982" },
-            { q: "In Carrie (1976), what event triggers Carrie’s telekinetic powers at the prom?", a: "She is drenched in (pig’s) blood" },
-            { q: "Who directed Hereditary (2018)?", a: "Ari Aster" },
-            { q: "What year was The Lighthouse (2019) released?", a: "2019" },
-            { q: "What is the primary antagonist in It Follows (2014)?", a: "A supernatural entity that follows its victims" },
-            { q: "Who directed The Witch (2015)?", a: "Robert Eggers" },
-            { q: "What year did The Wicker Man (1973) release?", a: "1973" },
-            { q: "Who is the killer in Friday the 13th (1980)?", a: "Pamela Voorhees" },
-            { q: "What is the central monster in It (2017)?", a: "Pennywise the Dancing Clown" },
-            { q: "What year was The Invisible Man remake released?", a: "2020" },
-            { q: "What year was Rosemary's Baby released?", a: "1968" },
-            { q: "Who plays the role of Jack Torrance in The Shining (1980)?", a: "Jack Nicholson" },
-            { q: "Who directed The Haunting (1963)?", a: "Robert Wise" },
-            { q: "In Us (2019), what doppelgänger group terrorizes a family?", a: "The Tethered" },
-            { q: "Who directed Get Out (2017)?", a: "Jordan Peele" },
-            { q: "In The Fly (1986), who plays the scientist that turns into a fly?", a: "Jeff Goldblum" },
-            { q: "What is the name of the haunted house in The Haunting (1963)?", a: "Hill House" },
-            { q: "What does the little girl in Poltergeist famously say?", a: "They’re here!" },
-            { q: "Who directed The Descent (2005)?", a: "Neil Marshall" },
-            { q: "What year was The Ring released?", a: "2002" },
-            { q: "Who directed Night of the Living Dead (1968)?", a: "George A. Romero" },
-            { q: "In Psycho (1960), who is revealed to be the killer?", a: "Norman Bates" },
-            { q: "What year was The Conjuring released?", a: "2013" },
-            { q: "What is the curse in The Ring (2002)?", a: "Viewing a cursed videotape leads to death in seven days" },
-            { q: "Who directed Rosemary's Baby (1968)?", a: "Roman Polanski" },
-            { q: "What is the central plot of The Shining (1980)?", a: "A man goes insane while taking care of a haunted hotel" },
-            { q: "What year was Hereditary released?", a: "2018" }
+        const images = [
+            'https://i.postimg.cc/Vkbts9Jg/10.png',
+            'https://i.postimg.cc/JhVksyJL/11.png',
+            'https://i.postimg.cc/BvH2p5sb/2.png',
+            'https://i.postimg.cc/1tSwjg5H/3.png',
+            'https://i.postimg.cc/3RZm5KkH/4.png',
+            'https://i.postimg.cc/KjvLmdT3/5.png',
+            'https://i.postimg.cc/wMfNM05f/6.png',
+            'https://i.postimg.cc/FFD3THty/7.png',
+            'https://i.postimg.cc/TY1mFvGZ/8.png',
+            'https://i.postimg.cc/SNP8p1xj/9.png'
         ];
 
-        let usedQuestions = [];
+        const imageContainer = document.getElementById('image-container');
 
-        function getRandomQuestion() {
-            if (usedQuestions.length === qaPairs.length) {
-                usedQuestions = []; // Reset if all questions have been used
-            }
-
-            let index;
-            do {
-                index = Math.floor(Math.random() * qaPairs.length);
-            } while (usedQuestions.includes(index));
-
-            usedQuestions.push(index);
-            return qaPairs[index];
+        function getRandomImage() {
+            const randomIndex = Math.floor(Math.random() * images.length);
+            return images[randomIndex];
         }
 
-        function updateQuestion() {
-            const { q, a } = getRandomQuestion();
-            document.getElementById('question').innerText = `Q: ${q}`;
-            document.getElementById('answer').innerText = `A: ${a}`;
+        function changeImage() {
+            const imageUrl = getRandomImage();
+            imageContainer.style.backgroundImage = `url('${imageUrl}')`;
         }
 
-        function changeQuestion() {
-            document.getElementById('qaBox').classList.add('pulsing');
+        function pulseEffect() {
+            imageContainer.classList.add('pulse');
             setTimeout(() => {
-                document.getElementById('qaBox').classList.remove('pulsing');
-            }, 800);
-
-            updateQuestion();
+                imageContainer.classList.remove('pulse');
+            }, 300);
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            updateQuestion();
+        imageContainer.addEventListener('click', () => {
+            pulseEffect();
+            changeImage();
         });
+
+        // Initialize with a random image
+        changeImage();
     </script>
 </body>
 </html>
