@@ -34,16 +34,40 @@
 
     <script>
         const images = [
-            'https://i.postimg.cc/Vkbts9Jg/10.png',
-            'https://i.postimg.cc/JhVksyJL/11.png',
-            'https://i.postimg.cc/BvH2p5sb/2.png',
-            'https://i.postimg.cc/1tSwjg5H/3.png',
-            'https://i.postimg.cc/3RZm5KkH/4.png',
-            'https://i.postimg.cc/KjvLmdT3/5.png',
-            'https://i.postimg.cc/wMfNM05f/6.png',
-            'https://i.postimg.cc/FFD3THty/7.png',
-            'https://i.postimg.cc/TY1mFvGZ/8.png',
-            'https://i.postimg.cc/SNP8p1xj/9.png'
+            'https://i.postimg.cc/vTmzVr0R/10.png',
+            'https://i.postimg.cc/TPXJ9MtJ/11.png',
+            'https://i.postimg.cc/gJzyCyFw/12.png',
+            'https://i.postimg.cc/dQSRfTW1/13.png',
+            'https://i.postimg.cc/tCK3qGGG/14.png',
+            'https://i.postimg.cc/SRwMxC5f/15.png',
+            'https://i.postimg.cc/Bvq1bqhk/16.png',
+            'https://i.postimg.cc/QM0KWRwt/17.png',
+            'https://i.postimg.cc/Jn0D3pCQ/18.png',
+            'https://i.postimg.cc/LXJk495R/19.png',
+            'https://i.postimg.cc/pVDxGDVQ/2.png',
+            'https://i.postimg.cc/d0tmXmKh/20.png',
+            'https://i.postimg.cc/kg7x6FGT/21.png',
+            'https://i.postimg.cc/bNxxwFyG/22.png',
+            'https://i.postimg.cc/05mmVHJt/23.png',
+            'https://i.postimg.cc/sD4WrQm7/24.png',
+            'https://i.postimg.cc/MZyM7MhN/25.png',
+            'https://i.postimg.cc/W3ZDfhtD/26.png',
+            'https://i.postimg.cc/B626BkwH/27.png',
+            'https://i.postimg.cc/HLqn5d3T/28.png',
+            'https://i.postimg.cc/2jFybpWf/29.png',
+            'https://i.postimg.cc/Bv1R80X5/3.png',
+            'https://i.postimg.cc/0yryBbB8/30.png',
+            'https://i.postimg.cc/3Nn3LTj4/31.png',
+            'https://i.postimg.cc/TYNRgTYB/32.png',
+            'https://i.postimg.cc/XYT41x58/33.png',
+            'https://i.postimg.cc/fL54svV1/34.png',
+            'https://i.postimg.cc/VvzhH044/4.png',
+            'https://i.postimg.cc/TPVM7xfd/46.png',
+            'https://i.postimg.cc/Y2xZL8qP/5.png',
+            'https://i.postimg.cc/zBZ6Kcgs/6.png',
+            'https://i.postimg.cc/9X1gQML5/7.png',
+            'https://i.postimg.cc/wMWwff1T/8.png',
+            'https://i.postimg.cc/0yKVnCPP/9.png'
         ];
 
         const imageContainer = document.getElementById('image-container');
@@ -70,8 +94,8 @@
             changeImage();
         });
 
-        // Initialize with a random image
-        changeImage();
+        // Initialize the image container with a random image when the page loads
+        window.onload = changeImage;
     </script>
 </body>
 </html>
